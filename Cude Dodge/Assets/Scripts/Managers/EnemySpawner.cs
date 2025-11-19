@@ -5,68 +5,77 @@ using System.Threading.Tasks;
 
 public class EnemySpawner : MonoBehaviour
 {
+    // Debug flag
     [SerializeField] private bool debug = false;
     
+    // Var for coroutine
     private IEnumerator _spawnerEnumerator;
     
+    // Delay for spawning plane
     [SerializeField] private float SpawnDelay;
     
+    // Prefab for plane
     [SerializeField] private GameObject spawnPrefab;
+    
+    // Spawner zones
     [SerializeField] private GameObject[] spawnObjects;
 
     private void Awake()
     {
+        // Fill coroutine var with coroutine
         _spawnerEnumerator = SpawnerWithTimer();
     }
 
     void Start()
     {
+        // Starting coroutine
         StartCoroutine(_spawnerEnumerator);
-    }
-
-    void Update()
-    {
-        
     }
     
     private IEnumerator SpawnerWithTimer()
     {
         while (true)
         {
+            // Delay between enemy spawn
             yield return new WaitForSeconds(SpawnDelay);
 
+            // Show red line
+            // ONE PIECE IS REAL!!!!
             ForeshadowEnemy();
             
+            // Debug thing
             if (debug) {Debug.Log("Spawn Complete");}
         }
     }
 
     private void ForeshadowEnemy()
     {
-        // Create object for line renderer
+        // Create empty object for line renderer
         GameObject empyObject = new GameObject("Foreshadow Line");
     
+        // Random spawn pos
         Vector3 spawnPosition = randomSpawnerPosition();
+        // Random destination pos
         Vector3 destinationPosition = randomSpawnerPosition();
     
-        //Create line renderer
+        // Create line renderer
         LineRenderer lineRenderer = empyObject.AddComponent<LineRenderer>();
 
         // Set the material
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
 
-        // Set the color
+        // Set the colors
         Color startColor = Color.red;
         startColor.a = 0.1f;
         lineRenderer.startColor = startColor;
-    
+        
         Color endColor = Color.red;
         endColor.a = 0.1f;
         lineRenderer.endColor = endColor;
 
         // Set the width
         lineRenderer.startWidth = 0.2f;
-        lineRenderer.endWidth = 0.2f;
+        lineRenderer.endWidth = 0.02f;
 
         // Set the number of vertices
         lineRenderer.positionCount = 2;
@@ -87,42 +96,44 @@ public class EnemySpawner : MonoBehaviour
     
     private IEnumerator DelayedSpawn(Vector3 spawnPos, Vector3 destPos, GameObject lineObject)
     {
-        // Ждем 2 секунды
+        // Wait for two seconds before DESTRUCTION!
         yield return new WaitForSeconds(2f);
     
-        // Уничтожаем линию
+        // Destroy red line
         Destroy(lineObject);
     
-        // Спавним врага
+        // Spawn enemy himself
         SpawnEnemy(spawnPos, destPos);
     }
     
     private void SpawnEnemy(Vector3 SpawnPosition,  Vector3 DestinationPosition)
     {
+        // Get positions from line
         Vector3 spawnPosition = SpawnPosition;
         Vector3 destinationPosition = DestinationPosition;
         
-        //Creating enemy
+        // Creating enemy
         GameObject createdEnemy = Instantiate(spawnPrefab, spawnPosition, Quaternion.identity, this.transform);
-        createdEnemy.GetComponent<Enemy>().desiredPosition = destinationPosition;
+        createdEnemy.GetComponent<EnemyPlane>().desiredPosition = destinationPosition;
     }
 
     private Vector3 randomSpawnerPosition()
     {
-        //Random spawn zone
+        // Random spawn zone
         int zoneNumber = UnityEngine.Random.Range(0, spawnObjects.Length);
         
-        //Random point in spawn zone
+        // Random point in spawn zone
         float randomX = UnityEngine.Random.Range(0, spawnObjects[zoneNumber].gameObject.transform.localScale.x);
         float randomY = UnityEngine.Random.Range(0, spawnObjects[zoneNumber].gameObject.transform.localScale.y);
         
-        //Vector 3 with random coordinates
+        // Vector 3 with random coordinates
         Vector3 spawnPos = new Vector3(
                                randomX - spawnObjects[zoneNumber].gameObject.transform.localScale.x / 2, 
                                randomY - spawnObjects[zoneNumber].gameObject.transform.localScale.y / 2, 
                                1) 
                            + spawnObjects[zoneNumber].transform.position;
         
+        // Take me, my Helltaker
         return spawnPos;
     }
 }

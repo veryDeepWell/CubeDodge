@@ -4,18 +4,22 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    // Var for text object
     [SerializeField] private GameObject scoreText;
     
+    // Init score        ↓(no shit sherlock)
     private int _score = 0;
-
-    public void ScoreUpdate()
-    {
-        scoreText.GetComponent<TextMeshPro>().text = _score.ToString();
-    }
-    
+       
     public void ScoreAdd(int addAmount)
     {
+        // Counting score
         _score += addAmount;
         ScoreUpdate();
+    }
+    
+    private void ScoreUpdate()
+    {
+        // Getting text component
+        scoreText.GetComponent<TextMeshPro>().text = _score.ToString();
     }
 }

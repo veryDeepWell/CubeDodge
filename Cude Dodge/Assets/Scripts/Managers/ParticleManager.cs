@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Useless shit
 public class ParticleManager : MonoBehaviour
 {
     [SerializeField] public ParticleSystem particle;

@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         StartCoroutine(_healthDecay);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Vector2 moveDirection = moveAction.action.ReadValue<Vector2>();
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime);

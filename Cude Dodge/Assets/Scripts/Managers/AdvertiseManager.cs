@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Useless shit
 public class AdvertiseManager : MonoBehaviour
 {
     [SerializeField] private Player player;
