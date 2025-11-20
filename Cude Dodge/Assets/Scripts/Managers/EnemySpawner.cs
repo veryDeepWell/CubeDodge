@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Threading.Tasks;
+using Random = System.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float SpawnDelay;
     
     // Prefab for plane
-    [SerializeField] private GameObject spawnPrefab;
+    [SerializeField] private GameObject planePrefab;
+    [SerializeField] private GameObject laserPrefab;
     
     // Spawner zones
     [SerializeField] private GameObject[] spawnObjects;
@@ -38,13 +40,32 @@ public class EnemySpawner : MonoBehaviour
         {
             // Delay between enemy spawn
             yield return new WaitForSeconds(SpawnDelay);
-
-            // Show red line
-            // ONE PIECE IS REAL!!!!
             ForeshadowEnemy();
             
-            // Debug thing
-            if (debug) {Debug.Log("Spawn Complete");}
+            
+            // Show red line
+            // ONE PIECE IS REAL!!!!
+            int randAttack = UnityEngine.Random.Range(0, 2);
+
+            switch (randAttack)
+            {
+                case 0:
+                    break;
+                    // Debug thing
+                    if (debug) {Debug.Log("Plane enemy spawned");}
+                    
+                    ForeshadowEnemy();
+                    break;
+                case 1:
+                    break;
+                    // Debug thing
+                    if (debug) {Debug.Log("Laser enemy spawned");}
+
+                    laserPrefab.GetComponent<EnemyLaser>().startPos = randomSpawnerPosition();
+                    laserPrefab.GetComponent<EnemyLaser>().endPos = randomSpawnerPosition();
+                    laserPrefab.GetComponent<EnemyLaser>().ForeshadowAttack();
+                    break;
+            }
         }
     }
 
@@ -91,10 +112,10 @@ public class EnemySpawner : MonoBehaviour
         Destroy(empyObject);
 
         // Запускаем корутину для задержки
-        StartCoroutine(DelayedSpawn(spawnPosition, destinationPosition, instantiatedLine));
+        StartCoroutine(DelayedAttack(spawnPosition, destinationPosition, instantiatedLine));
     }
     
-    private IEnumerator DelayedSpawn(Vector3 spawnPos, Vector3 destPos, GameObject lineObject)
+    private IEnumerator DelayedAttack(Vector3 spawnPos, Vector3 destPos, GameObject lineObject)
     {
         // Wait for two seconds before DESTRUCTION!
         yield return new WaitForSeconds(2f);
@@ -103,17 +124,17 @@ public class EnemySpawner : MonoBehaviour
         Destroy(lineObject);
     
         // Spawn enemy himself
-        SpawnEnemy(spawnPos, destPos);
+        SpawnAttack(spawnPos, destPos);
     }
     
-    private void SpawnEnemy(Vector3 SpawnPosition,  Vector3 DestinationPosition)
+    private void SpawnAttack(Vector3 SpawnPosition,  Vector3 DestinationPosition)
     {
         // Get positions from line
         Vector3 spawnPosition = SpawnPosition;
         Vector3 destinationPosition = DestinationPosition;
         
         // Creating enemy
-        GameObject createdEnemy = Instantiate(spawnPrefab, spawnPosition, Quaternion.identity, this.transform);
+        GameObject createdEnemy = Instantiate(planePrefab, spawnPosition, Quaternion.identity, this.transform);
         createdEnemy.GetComponent<EnemyPlane>().desiredPosition = destinationPosition;
     }
 

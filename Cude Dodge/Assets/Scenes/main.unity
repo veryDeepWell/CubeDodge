@@ -1315,9 +1315,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3bca3cabfd79a4396738125bc0d729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  debug: 0
+  debug: 1
   SpawnDelay: 0.25
-  spawnPrefab: {fileID: 3990681942974429238, guid: 82e4c13bdd1f05445b444d357a300e26, type: 3}
+  planePrefab: {fileID: 3990681942974429238, guid: 82e4c13bdd1f05445b444d357a300e26, type: 3}
+  laserPrefab: {fileID: 5499258776305307978, guid: fcde4f679d460f8488b3b0a370efcf7e, type: 3}
   spawnObjects:
   - {fileID: 2008847350}
   - {fileID: 833808536}
