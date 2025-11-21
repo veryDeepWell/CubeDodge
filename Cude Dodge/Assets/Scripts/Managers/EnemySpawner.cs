@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     
     // Delay for spawning plane
     [SerializeField] private float SpawnDelay;
+
+    [SerializeField] private GameObject[] attackPool;
     
     // Prefab for plane
     [SerializeField] private GameObject planePrefab;
@@ -34,36 +36,37 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(_spawnerEnumerator);
     }
     
+    private int randomNumber;
+    
     private IEnumerator SpawnerWithTimer()
     {
+        Random randomIntForAttack = new Random();
+
         while (true)
         {
-            // Delay between enemy spawn
             yield return new WaitForSeconds(SpawnDelay);
-            ForeshadowEnemy();
             
-            
-            // Show red line
-            // ONE PIECE IS REAL!!!!
-            int randAttack = UnityEngine.Random.Range(0, 2);
+            Vector3 startPosition = GiveMeRandomPos();;
+            Vector3 endPosition = GiveMeRandomPos();;
+            randomNumber = randomIntForAttack.Next(0, 2);
 
-            switch (randAttack)
+            switch (randomNumber)
             {
                 case 0:
-                    break;
-                    // Debug thing
-                    if (debug) {Debug.Log("Plane enemy spawned");}
+                    // Plane enemy
+                    GameObject planeThingy = Instantiate(attackPool[0], startPosition, Quaternion.identity);
                     
-                    ForeshadowEnemy();
+                    planeThingy.GetComponent<EnemyPlane>().StartPosition =  startPosition;
+                    planeThingy.GetComponent<EnemyPlane>().EndPosotion =  endPosition;
+                    planeThingy.GetComponent<EnemyPlane>().BeginAttack();
                     break;
                 case 1:
-                    break;
-                    // Debug thing
-                    if (debug) {Debug.Log("Laser enemy spawned");}
-
-                    laserPrefab.GetComponent<EnemyLaser>().startPos = randomSpawnerPosition();
-                    laserPrefab.GetComponent<EnemyLaser>().endPos = randomSpawnerPosition();
-                    laserPrefab.GetComponent<EnemyLaser>().ForeshadowAttack();
+                    // Laser enemy
+                    GameObject laserThingy = Instantiate(attackPool[1], startPosition, Quaternion.identity);
+                    
+                    laserThingy.GetComponent<EnemyLaser>().StartPosition =  startPosition;
+                    laserThingy.GetComponent<EnemyLaser>().EndPosotion =  endPosition;
+                    laserThingy.GetComponent<EnemyLaser>().BeginAttack();
                     break;
             }
         }
@@ -75,9 +78,9 @@ public class EnemySpawner : MonoBehaviour
         GameObject empyObject = new GameObject("Foreshadow Line");
     
         // Random spawn pos
-        Vector3 spawnPosition = randomSpawnerPosition();
+        Vector3 spawnPosition = GiveMeRandomPos();
         // Random destination pos
-        Vector3 destinationPosition = randomSpawnerPosition();
+        Vector3 destinationPosition = GiveMeRandomPos();
     
         // Create line renderer
         LineRenderer lineRenderer = empyObject.AddComponent<LineRenderer>();
@@ -135,10 +138,10 @@ public class EnemySpawner : MonoBehaviour
         
         // Creating enemy
         GameObject createdEnemy = Instantiate(planePrefab, spawnPosition, Quaternion.identity, this.transform);
-        createdEnemy.GetComponent<EnemyPlane>().desiredPosition = destinationPosition;
+        //TODO: createdEnemy.GetComponent<EnemyPlane>().EndPosotion = destinationPosition;
     }
 
-    private Vector3 randomSpawnerPosition()
+    private Vector3 GiveMeRandomPos()
     {
         // Random spawn zone
         int zoneNumber = UnityEngine.Random.Range(0, spawnObjects.Length);
