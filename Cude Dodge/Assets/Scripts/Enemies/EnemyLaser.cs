@@ -4,28 +4,35 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyLaser : MonoBehaviour
+public class EnemyLaser : MonoBehaviour,
+    IEnemy
 {
-    public Vector3 startPos;
-    public Vector3 endPos;
-
-    public void ForeshadowAttack()
+    // Debug flag
+    [SerializeField] private bool debug = false;
+    
+    [SerializeField] private float delayBeforeMove;
+    [SerializeField] private float delayBeforeSuicide;
+    
+    // Movement start and end
+    public Vector3 StartPosition;
+    public Vector3 EndPosotion;
+    
+    public void BeginAttack()
     {
-        // Create empty object for line renderer
-        GameObject empyObject = new GameObject("Foreshadow Line");
-    
-        // Random spawn pos
-        Vector3 spawnPosition = startPos;
-        // Random destination pos
-        Vector3 destinationPosition = endPos;
-    
-        // Create line renderer
-        LineRenderer lineRenderer = empyObject.AddComponent<LineRenderer>();
+        ForeshadowEnemy();
+    }
 
-        // Set the material
+    public void ForeshadowEnemy()
+    {
+        // Создаем объект для LineRenderer напрямую в сцене
+        GameObject foreshadowObject = new GameObject("Foreshadow Plane Line");
+    
+        Vector3 spawnPosition = StartPosition;
+        Vector3 destinationPosition = EndPosotion;
+    
+        LineRenderer lineRenderer = foreshadowObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
 
-        // Set the colors
         Color startColor = Color.pink;
         startColor.a = 0.1f;
         lineRenderer.startColor = startColor;
@@ -34,84 +41,120 @@ public class EnemyLaser : MonoBehaviour
         endColor.a = 0.1f;
         lineRenderer.endColor = endColor;
 
-        // Set the width
-        lineRenderer.startWidth = 0.2f;
-        lineRenderer.endWidth = 0.02f;
-
-        // Set the number of vertices
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
         lineRenderer.positionCount = 2;
-    
-        // Set the positions of the vertices
         lineRenderer.SetPosition(0, spawnPosition);
         lineRenderer.SetPosition(1, destinationPosition);
     
-        // Instantiate line object и сохраняем ссылку
-        GameObject instantiatedLine = Instantiate(empyObject, new Vector3(0, 0, 0), Quaternion.identity);
+        // Запускаем корутину с созданным объектом
+        StartCoroutine(DelayedAction(delayBeforeMove, foreshadowObject));
+    }
 
-        // Запускаем корутину для задержки
-        StartCoroutine(DelayedAttack(spawnPosition, destinationPosition, instantiatedLine));
-    }
-    
-    private IEnumerator DelayedAttack(Vector3 spawnPos, Vector3 destPos, GameObject lineObject)
+    public IEnumerator DelayedAction(float timeToWait, GameObject foreshadowObject)
     {
-        // Wait for two seconds before DESTRUCTION!
-        yield return new WaitForSeconds(1f);
-    
-        // Destroy red line
-        Destroy(lineObject);
-    
-        // Spawn enemy himself
-        SpawnAttack(spawnPos, destPos);
-    }
-    
-    private void SpawnAttack(Vector3 SpawnPosition,  Vector3 DestinationPosition)
-    {
-        // Get positions from line
-        Vector3 spawnPosition = SpawnPosition;
-        Vector3 destinationPosition = DestinationPosition;
+        // Ждем указанное время
+        yield return new WaitForSeconds(timeToWait);
+
+        // Уничтожаем LineRenderer
+        if (foreshadowObject != null) { Destroy(foreshadowObject); }
         
-        // Creating enemy
-        // Create empty object for line renderer
-        GameObject empyObject = new GameObject("Attack Line");
-    
-        // Create line renderer
-        LineRenderer lineRenderer = empyObject.AddComponent<LineRenderer>();
+        MainAttack(); 
+    }
 
-        // Set the material
+    private void MainAttack()
+    {
+        // Создаем объект для LineRenderer напрямую в сцене
+        GameObject attackObject = new GameObject("Foreshadow Plane Line");
+    
+        Vector3 spawnPosition = StartPosition;
+        Vector3 destinationPosition = EndPosotion;
+    
+        LineRenderer lineRenderer = attackObject.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
 
-        // Set the colors
-        Color startColor = Color.pink;
+        Color startColor = Color.deepPink;
         startColor.a = 1f;
         lineRenderer.startColor = startColor;
         
-        Color endColor = Color.pink;
+        Color endColor = Color.deepPink;
         endColor.a = 1f;
         lineRenderer.endColor = endColor;
 
-        // Set the width
-        lineRenderer.startWidth = 0.2f;
-        lineRenderer.endWidth = 0.2f;
-
-        // Set the number of vertices
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
         lineRenderer.positionCount = 2;
-    
-        // Set the positions of the vertices
         lineRenderer.SetPosition(0, spawnPosition);
         lineRenderer.SetPosition(1, destinationPosition);
-    
-        // Instantiate line object и сохраняем ссылку
-        GameObject instantiatedLine = Instantiate(empyObject, new Vector3(0, 0, 0), Quaternion.identity);
         
-        StartCoroutine(DelayedSomething(instantiatedLine));
+        PerformLinecast();
+
+        StartCoroutine(DelayedDestruction(delayBeforeSuicide, attackObject));
     }
     
-    private IEnumerator DelayedSomething(GameObject lineObject)
+    public IEnumerator DelayedDestruction(float timeToWait, GameObject foreshadowObject)
     {
-        // Wait for two seconds before DESTRUCTION!
-        yield return new WaitForSeconds(1f);
+        // Ждем указанное время
+        yield return new WaitForSeconds(timeToWait);
+
+        // Уничтожаем LineRenderer
+        if (foreshadowObject != null) { Destroy(foreshadowObject); }
+        
+        Destroy(this.gameObject);
+    }
     
-        // Destroy red line
-        Destroy(lineObject);
+    private void PerformRaycast()
+    {
+        //if (debug) { Debug.Log("I am alive - "); }
+        
+        Vector3 direction = (EndPosotion - StartPosition).normalized;
+        float distance = Vector3.Distance(StartPosition, EndPosotion);
+        
+        RaycastHit[] hits = Physics.RaycastAll(StartPosition, direction, distance);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (debug) { Debug.Log("I am hit - " + hit.transform.gameObject.name); }
+            
+            if (hit.collider.gameObject.tag == "MainHero")
+            {
+                hit.collider.GetComponent<Player>().HealthDown(5);
+                break;
+            }
+        }
+    }
+    
+    private void PerformLinecast()
+    {
+        //if (debug) { Debug.Log("I am alive - "); }
+        //if (debug) { Debug.Log("I am hit - " + hit.transform.gameObject.name); }
+        
+        RaycastHit2D hit = Physics2D.Linecast(StartPosition, EndPosotion);
+        
+        if (hit.collider != null)
+        {
+            string hitName = hit.collider.gameObject.name;
+        
+            if (debug) 
+            { 
+                Debug.Log($"Linecast hit: {hitName} at distance {hit.distance}");
+                Debug.DrawLine(StartPosition, EndPosotion, Color.red, 1f); // Визуализация в Scene view
+            }
+
+            if (debug)
+            {
+                Debug.Log("I am hit - " + hitName);
+            }
+
+            if (hit.collider.gameObject.tag == "MainHero")
+            {
+                hit.collider.gameObject.GetComponentInParent<Player>().HealthDown(5);
+            }
+        }
+        else if (debug)
+        {
+            Debug.Log("Linecast missed");
+            Debug.DrawLine(StartPosition, EndPosotion, Color.green, 1f);
+        }
     }
 }

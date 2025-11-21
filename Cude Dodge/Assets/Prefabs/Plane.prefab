@@ -107,8 +107,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   debug: 0
   moveSpeed: 12
+  delayBeforeMove: 2
   particle: {fileID: 1401632949396113197, guid: 256f5e1128d092146a7262bf3dfea963, type: 3}
-  desiredPosition: {x: 0, y: 0, z: 0}
+  StartPosition: {x: 0, y: 0, z: 0}
+  EndPosotion: {x: 0, y: 0, z: 0}
 --- !u!60 &6353622516027954099
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -103,5 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c270065578886408fab3841e6c3ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLaser
-  player: {fileID: 0}
-  startPos: {x: 0, y: 0, z: 0}
+  debug: 0
+  delayBeforeMove: 1
+  delayBeforeSuicide: 0.2
+  StartPosition: {x: 0, y: 0, z: 0}
+  EndPosotion: {x: 0, y: 0, z: 0}

@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Interfaces
+public interface IEnemy
 {
-    public interface IEnemy
-    {
-        private void ForeshadowAttack() {}
-        private void MakeAttack() {}
-    }
+    void BeginAttack();
+
+    void ForeshadowEnemy();
+
+    IEnumerator DelayedAction(float timeToWait, GameObject foreshadowObject);
 }
