@@ -145,9 +145,11 @@ public class EnemyLaser : MonoBehaviour,
             {
                 Debug.Log("I am hit - " + hitName);
             }
-
+            
+            // Функция проверки тегов
             if (hit.collider.gameObject.tag == "MainHero")
             {
+                // Сначала проверить наличие
                 hit.collider.gameObject.GetComponentInParent<Player>().HealthDown(5);
             }
         }

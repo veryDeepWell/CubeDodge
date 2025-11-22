@@ -138,7 +138,6 @@ public class EnemySpawner : MonoBehaviour
         
         // Creating enemy
         GameObject createdEnemy = Instantiate(planePrefab, spawnPosition, Quaternion.identity, this.transform);
-        //TODO: createdEnemy.GetComponent<EnemyPlane>().EndPosotion = destinationPosition;
     }
 
     private Vector3 GiveMeRandomPos()
