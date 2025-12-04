@@ -1595,10 +1595,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1846960850}
+  - component: {fileID: 1846960851}
   - component: {fileID: 1846960849}
   - component: {fileID: 1846960853}
   - component: {fileID: 1846960854}
-  - component: {fileID: 1846960851}
   - component: {fileID: 1846960855}
   m_Layer: 0
   m_Name: Player
@@ -1687,6 +1687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c352501eaa1108d4fa43fa25de87b390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LostCondition
+  debug: 0
 --- !u!114 &1846960854
 MonoBehaviour:
   m_ObjectHideFlags: 0

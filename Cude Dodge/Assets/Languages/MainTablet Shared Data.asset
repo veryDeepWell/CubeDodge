@@ -59,6 +59,66 @@ MonoBehaviour:
     m_Key: settings/Canvas/ExitButton/Text (TMP)
     m_Metadata:
       m_Items: []
+  - m_Id: 5151687703678976
+    m_Key: menu/Canvas/Leaders/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151773577859072
+    m_Key: leaderboard/Canvas/Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151826241540096
+    m_Key: leaderboard/Canvas/Names/Text (TMP) (0)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151826249928704
+    m_Key: leaderboard/Canvas/Names/Text (TMP) (2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151826279288832
+    m_Key: leaderboard/Canvas/Names/Text (TMP) (3)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151826291871744
+    m_Key: leaderboard/Canvas/Names/Text (TMP) (4)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151826304454656
+    m_Key: leaderboard/Canvas/Names/Text (TMP) (1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151850815967232
+    m_Key: leaderboard/Canvas/Scores/Text (TMP) (1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151850836938752
+    m_Key: leaderboard/Canvas/Scores/Text (TMP) (2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151850849521664
+    m_Key: leaderboard/Canvas/Scores/Text (TMP) (0)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151850866298880
+    m_Key: leaderboard/Canvas/Scores/Text (TMP) (3)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151850878881792
+    m_Key: leaderboard/Canvas/Scores/Text (TMP) (4)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151898916245504
+    m_Key: leaderboard/Canvas/NameInput/Text Area/Placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151928578363392
+    m_Key: leaderboard/Canvas/SendButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5151988644990976
+    m_Key: leaderboard/Canvas/Back/Text (TMP)
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

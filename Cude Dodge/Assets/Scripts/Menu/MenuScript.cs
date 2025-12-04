@@ -10,7 +10,7 @@ public class MenuScript : MonoBehaviour
 
     public void _SettingsButton()
     {
-        SceneManager.LoadScene("settings");
+        SceneManager.LoadScene("settings2");
     }
 
     public void _ExitButton()
@@ -21,5 +21,10 @@ public class MenuScript : MonoBehaviour
     public void _BackToMenuButton()
     {
         SceneManager.LoadScene("menu");
+    }
+
+    public void _LeaderboardButton()
+    {
+        SceneManager.LoadScene("leaderboard");
     }
 }
