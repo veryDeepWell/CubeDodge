@@ -100,9 +100,9 @@ public class EnemyPlane : MonoBehaviour,
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (debug) { Debug.Log("Collide detected"); }
+        if (debug) { Debug.Log("[PLANE] - [OnCollisionEnter2D] - Collide detected"); }
         
-        // If we flew into player
+        // If we flew into player //TODO Compare tag
         if (collision.gameObject.CompareTag("MainHero"))
         {
             collision.gameObject.GetComponentInParent<Player>().HealthDown(5);

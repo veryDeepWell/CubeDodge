@@ -20,8 +20,9 @@ public class Food : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Debug shit
-        if (debug) {Debug.Log("Collide detected");}
+        if (debug) {Debug.Log("[FOOD_OBJECT] - [OnCollisionEnter2D] - Collision detected with: " + collision.gameObject.name);}
         
+        // TODO Compare tag
         if (collision.gameObject.CompareTag("MainHero"))
         {
             // If we collide with player - give him health

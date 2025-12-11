@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c93bbc92458b0d47b64d2da882120eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+  debug: 0
   scoreText: {fileID: 749630338}
 --- !u!1 &259843946
 GameObject:
@@ -1316,7 +1317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   debug: 0
-  SpawnDelay: 0.25
+  spawnDelay: 0.25
   attackPool:
   - {fileID: 3990681942974429238, guid: 82e4c13bdd1f05445b444d357a300e26, type: 3}
   - {fileID: 5499258776305307978, guid: fcde4f679d460f8488b3b0a370efcf7e, type: 3}
@@ -1622,7 +1623,7 @@ MonoBehaviour:
   HealthText: {fileID: 259843946}
   moveAction: {fileID: 4084898348650203080, guid: 6c395d812ad97454593e25c295bfce39, type: 3}
   moveSpeed: 5
-  Health: 10
+  health: 10
   MaxHealth: 0
   HealthDecayInterval: 2
   HealthDecayDamage: 2

@@ -4,6 +4,8 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    [SerializeField] private bool debug = false;
+    
     // Var for text object
     [SerializeField] private GameObject scoreText;
     
@@ -14,6 +16,7 @@ public class ScoreManager : MonoBehaviour
     {
         // Counting score
         _score += addAmount;
+        if (debug) {Debug.Log("[SCORE] - [ScoreAdd] - Adding score: " + addAmount);}
         ScoreUpdate();
     }
 

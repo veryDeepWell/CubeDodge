@@ -7,7 +7,7 @@ public class AdvertiseManager : MonoBehaviour
     
     public void AdvertiseStart()
     {
-        Debug.Log("Advertise Started");
+        Debug.Log("[ADVERTISE] - [AdvertiseStart] - Advertise Started");
         // Something happened with add
         AdvertiseEnd(1);
     }
@@ -17,11 +17,11 @@ public class AdvertiseManager : MonoBehaviour
         switch (result)
         {
             case 1:
-                Debug.Log("Advertise ended Fully, reward given");
+                Debug.Log("[ADVERTISE] - [AdvertiseEnd] - Advertise ended Fully, reward given");
                 player.GetComponent<LostCondition>().PlayerRevive();
                 break;
             case 2:
-                Debug.Log("Advertise ended not fully, reward skipped");
+                Debug.Log("[ADVERTISE] - [AdvertiseEnd] - Advertise ended not fully, reward skipped");
                 break;
         }
     }

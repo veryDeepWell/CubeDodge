@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class EnemyLaser : MonoBehaviour,
     IEnemy
@@ -102,33 +99,9 @@ public class EnemyLaser : MonoBehaviour,
         
         Destroy(this.gameObject);
     }
-    
-    private void PerformRaycast()
-    {
-        //if (debug) { Debug.Log("I am alive - "); }
-        
-        Vector3 direction = (EndPosotion - StartPosition).normalized;
-        float distance = Vector3.Distance(StartPosition, EndPosotion);
-        
-        RaycastHit[] hits = Physics.RaycastAll(StartPosition, direction, distance);
 
-        foreach (RaycastHit hit in hits)
-        {
-            if (debug) { Debug.Log("I am hit - " + hit.transform.gameObject.name); }
-            
-            if (hit.collider.gameObject.tag == "MainHero")
-            {
-                hit.collider.GetComponent<Player>().HealthDown(5);
-                break;
-            }
-        }
-    }
-    
     private void PerformLinecast()
     {
-        //if (debug) { Debug.Log("I am alive - "); }
-        //if (debug) { Debug.Log("I am hit - " + hit.transform.gameObject.name); }
-        
         RaycastHit2D hit = Physics2D.Linecast(StartPosition, EndPosotion);
         
         if (hit.collider != null)
@@ -155,7 +128,7 @@ public class EnemyLaser : MonoBehaviour,
         }
         else if (debug)
         {
-            Debug.Log("Linecast missed");
+            Debug.Log("[LASER] - [PerformLinecast] - Linecast missed");
             Debug.DrawLine(StartPosition, EndPosotion, Color.green, 1f);
         }
     }

@@ -54,8 +54,6 @@ public class FoodSpawner : MonoBehaviour
             // Waiting between spawning food
             yield return new WaitForSeconds(3f);
             
-            // Debug thing, ignore it
-            if (debug) {Debug.Log("Spawning food");}
             
             // Slightly less zone, for not spawning food at corner of screen
             Vector3 randomViewportPoint = new Vector3(Random.Range(0.1f, 0.9f), Random.Range(0.1f, 0.9f), 1f);
@@ -63,6 +61,9 @@ public class FoodSpawner : MonoBehaviour
             
             // Creating food
             createdEnemy = Instantiate(foodPrefab, randomWorldPoint, Quaternion.identity, this.transform);
+            
+            // Debug thing, ignore it
+            if (debug) {Debug.Log("[FOOD_SPAWN] - [SpawnFood] - Spawning food at cords: " + randomWorldPoint);}
         }
     }
 }

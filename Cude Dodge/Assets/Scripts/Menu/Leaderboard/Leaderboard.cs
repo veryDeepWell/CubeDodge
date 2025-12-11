@@ -6,21 +6,30 @@ using Dan.Main;
 
 public class Leaderboard : MonoBehaviour
 {
+    [SerializeField] private bool debug = false;
+    
+    // Листы
     [SerializeField] private List<TextMeshProUGUI> names;
     [SerializeField] private List<TextMeshProUGUI> scores;
     
+    // Текст очков игрока
     [SerializeField] private GameObject scoreText;
     
+    // Мой ключик к таблице
     private string _publicKey = "e7d63394c6ba35bdef2299bd2d5db3aa79011bb3ab5e161baedd6947b0249820";
 
     private void Start()
     {
+        // Просим таблицу в самом начале
         GetLeaderboard();
+        
+        // Закидываем очки в текст
         scoreText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("playerScore").ToString();
     }
 
     public void GetLeaderboard()
     {
+        // Просим табличку с коллбеком
         LeaderboardCreator.GetLeaderboard(_publicKey, ((msg) =>
         {
             int loopHeight = (msg.Length < names.Count) ? msg.Length : names.Count;
@@ -32,6 +41,7 @@ public class Leaderboard : MonoBehaviour
         }));
     }
 
+    // Отправляем юсера в таблицу
     public void SetEntry(string username, int score)
     {
         LeaderboardCreator.UploadNewEntry(_publicKey, username, score, ((msg) =>

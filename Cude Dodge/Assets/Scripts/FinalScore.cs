@@ -17,8 +17,8 @@ public class FinalScore : MonoBehaviour
     {
         int loadedScore = PlayerPrefs.GetInt("playerScore");
 
-        if (scoreText == null) { Debug.Log("[SCORE] - FinalScore.cs - Score text is null"); }
-        if (debug) { Debug.Log("[SCORE] - FinalScore.cs - Saved score = " + loadedScore); }
+        if (scoreText == null) { Debug.Log("[SCORE] - [LoadScoreFromMemory] - Score text object is null"); }
+        if (debug) { Debug.Log("[SCORE] - [LoadScoreFromMemory] - Saved score = " + loadedScore); }
 
         scoreText.GetComponent<TextMeshProUGUI>().text = loadedScore.ToString();
     }

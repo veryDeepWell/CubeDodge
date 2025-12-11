@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private float moveSpeed;
 
-    [SerializeField] private int Health;
+    [SerializeField] private int health;
     public int MaxHealth;
     [SerializeField] private int HealthDecayInterval;
     [SerializeField] private int HealthDecayDamage;
@@ -25,13 +25,15 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        MaxHealth = Health;
+        MaxHealth = health;
         particleInstance = Instantiate(particle, transform.position - new Vector3(0f, 0f, 1f), Quaternion.identity);
         
         lostCondition = GetComponent<LostCondition>();
         colorChanger = GetComponent<ColorChanger>();
         
         _healthDecay = HealthDecayRoutine();
+        
+        WaitForSeconds healthDelayYield = new WaitForSeconds(HealthDecayInterval);
     }
 
     private void Start()
@@ -52,36 +54,36 @@ public class Player : MonoBehaviour
 
     public void HealthDown(int downAmount)
     {
-        Health -= downAmount;
+        health -= downAmount;
         HealthUpdate();
 
-        if (Health <= 0) {lostCondition.PlayerLost();}
+        if (health <= 0) {lostCondition.PlayerLost();}
     }
 
     public void HealthUp(int upAmount)
     {
-        Health += upAmount;
-        if (Health > MaxHealth) {Health = MaxHealth;}
+        health += upAmount;
+        if (health > MaxHealth) {health = MaxHealth;}
         HealthUpdate();
     }
     
     public void HealthSet(int setAmount)
     {
-        Health = setAmount;
+        health = setAmount;
         HealthUpdate();
     }
 
     private void HealthUpdate()
     {
-        HealthText.GetComponent<TextMeshPro>().text = Health.ToString();
-        colorChanger.ChangeWithParameter(Health);
+        HealthText.GetComponent<TextMeshPro>().text = health.ToString();
+        colorChanger.ChangeWithParameter(health);
     }
-
+    
     private IEnumerator HealthDecayRoutine()
     {
         while (true)
         {
-            yield return new WaitForSeconds(HealthDecayInterval);
+            yield return HealthDecayInterval;
         
             HealthDown(HealthDecayDamage);
         }
