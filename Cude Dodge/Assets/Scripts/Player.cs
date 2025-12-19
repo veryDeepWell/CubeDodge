@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     
     private IEnumerator _healthDecay;
 
+    private WaitForSeconds healthDelayYield;
+
     private void Awake()
     {
         MaxHealth = health;
@@ -33,7 +35,7 @@ public class Player : MonoBehaviour
         
         _healthDecay = HealthDecayRoutine();
         
-        WaitForSeconds healthDelayYield = new WaitForSeconds(HealthDecayInterval);
+        healthDelayYield = new WaitForSeconds(HealthDecayInterval);
     }
 
     private void Start()
@@ -83,7 +85,7 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            yield return HealthDecayInterval;
+            yield return healthDelayYield;
         
             HealthDown(HealthDecayDamage);
         }

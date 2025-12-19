@@ -45,9 +45,9 @@ Material:
     - _Fullscreen_DstColorBlend: 10
     - _Fullscreen_SrcAlphaBlend: 1
     - _Fullscreen_SrcColorBlend: 5
-    - _Mult: 0.46
-    - _Power: 1.4
-    - _UIScaling: 1005.32
+    - _Mult: 0.5
+    - _Power: 1.6
+    - _UIScaling: 1000
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

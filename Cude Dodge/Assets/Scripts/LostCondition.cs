@@ -1,40 +1,37 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LostCondition : MonoBehaviour
 {
     [SerializeField] private bool debug = false;
-    private bool weAdvertiseNow = false;
-    
-    private PlayerManager playerManager;
-    private void Awake()
-    {
-        playerManager = GetComponent<PlayerManager>();
-    }
 
     public void PlayerLost()
     {
-        AdvertiseManager advertiseManager = playerManager.Admin.GetComponent<AdvertiseManager>();
-        ScoreManager scoreManager = playerManager.Admin.GetComponent<ScoreManager>();
-        
-        if (weAdvertiseNow) {advertiseManager.AdvertiseStart();}
+        if (debug) Debug.Log("[LOST] - [PlayerLost] - Skill issue");
 
-        ScoreThingis(scoreManager.getScore());
-        
+        SaveScore();
+
         SceneManager.LoadScene("lost");
     }
 
-    private void ScoreThingis(int score)
+    private void SaveScore()
     {
-        PlayerPrefs.SetInt("playerScore", score);
-        PlayerPrefs.Save();
+        ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
+        if (scoreManager != null)
+        {
+            int score = scoreManager.getScore();
+            PlayerPrefs.SetInt("playerScore", score);
+            PlayerPrefs.Save();
+            if (debug) Debug.Log("[LOST] - [SaveScore] - Сохранён счёт: " + score);
+        }
     }
     
     public void PlayerRevive()
     {
         Player player = GetComponent<Player>();
-
-        player.HealthSet(player.MaxHealth);
+        if (player != null)
+        {
+            player.HealthSet(player.MaxHealth);
+        }
     }
 }

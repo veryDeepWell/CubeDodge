@@ -45,9 +45,9 @@ Material:
     - _Fullscreen_DstColorBlend: 10
     - _Fullscreen_SrcAlphaBlend: 1
     - _Fullscreen_SrcColorBlend: 5
-    - _VigIntensity: 1.4
-    - _VigPower: 2.07
+    - _VigIntensity: 1
+    - _VigPower: 3
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
