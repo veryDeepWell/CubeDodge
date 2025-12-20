@@ -4,6 +4,8 @@ using SuperMobileAds; // Подключаем SDK
 
 public class AdvertiseManager : MonoBehaviour
 {
+    [SerializeField] private bool debug = false;
+    
     [Header("SuperMobileAds Settings")]
     public string interstitialAdUnitId = "interstitial_default";
     public string rewardedAdUnitId = "rewarded_default";
@@ -29,7 +31,7 @@ public class AdvertiseManager : MonoBehaviour
     
     private void InitializeAds()
     {
-        Debug.Log("Инициализация рекламы...");
+        if (debug) { Debug.Log("Инициализация рекламы..."); }
         
         // Инициализируем Interstitial
         _interstitialAd = new SuperMobileAdsInterstitial();
@@ -89,7 +91,7 @@ public class AdvertiseManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Реклама уже показывается или не инициализирована");
+            if (debug) { Debug.Log("Реклама уже показывается или не инициализирована"); }
             onAdDismissed?.Invoke(); // Пропускаем рекламу если нельзя показать
         }
     }
@@ -110,7 +112,7 @@ public class AdvertiseManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Rewarded реклама не готова");
+            if (debug) { Debug.Log("Rewarded реклама не готова");}
         }
     }
     

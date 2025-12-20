@@ -105,7 +105,7 @@ public class EnemyPlane : MonoBehaviour,
         // If we flew into player //TODO Compare tag
         if (collision.gameObject.CompareTag("MainHero"))
         {
-            collision.gameObject.GetComponentInParent<Player>().HealthDown(5);
+            collision.gameObject.GetComponentInParent<Player>().HealthDown(5, "plane");
             SpawnParticles();
             Destroy(this.gameObject);
         }

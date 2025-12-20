@@ -8,6 +8,8 @@ namespace SuperMobileAds
 {
     public class SuperMobileAdsRewarded
     {
+        [SerializeField] private bool debug = false;
+        
         private bool _isInitialized;
         private string _adUnitId;
         private bool _isLoaded;
@@ -22,7 +24,11 @@ namespace SuperMobileAds
 
         public void Initialize(string adUnitId)
         {
-            Debug.Log("SuperMobileAdsRewarded Initialized");
+            if (debug)
+            {
+                Debug.Log("SuperMobileAdsRewarded Initialized");
+            }
+
             _isInitialized = true;
             _adUnitId = adUnitId;
             _isShowing = false;
@@ -33,7 +39,11 @@ namespace SuperMobileAds
         {
             if (!_isInitialized)
             {
-                Debug.Log("SuperMobileAdsRewarded is not initialized");
+                if (debug)
+                {
+                    Debug.Log("SuperMobileAdsRewarded is not initialized");
+                }
+
                 return;
             }
 
@@ -44,25 +54,36 @@ namespace SuperMobileAds
         {
             if (!_isInitialized)
             {
-                Debug.Log("SuperMobileAdsRewarded is not initialized");
+                if (debug)
+                {
+                    Debug.Log("SuperMobileAdsRewarded is not initialized");
+                }
+
                 return;
             }
 
             if (_isShowing)
             {
-                Debug.Log("SuperMobileAdsRewarded is already showing");
+                if (debug) { Debug.Log("SuperMobileAdsRewarded is already showing"); }
                 return;
             }
 
             if (!_isLoaded)
             {
-                Debug.Log("SuperMobileAdsRewarded is not loaded");
+                if (debug)
+                {
+                    Debug.Log("SuperMobileAdsRewarded is not loaded");
+                }
+
                 return;
             }
 
             ShowingBanner();
 
-            Debug.Log("SuperMobileAdsRewarded Showed " + _adUnitId);
+            if (debug)
+            {
+                Debug.Log("SuperMobileAdsRewarded Showed " + _adUnitId);
+            }
         }
 
         private async void LoadingBanner()
@@ -73,13 +94,19 @@ namespace SuperMobileAds
             {
                 onAdLoaded?.Invoke();
                 _isLoaded = true;
-                Debug.Log("SuperMobileAdsRewarded Loaded " + _adUnitId);
+                if (debug)
+                {
+                    Debug.Log("SuperMobileAdsRewarded Loaded " + _adUnitId);
+                }
             }
             else
             {
                 onAdFailedToLoad?.Invoke();
                 _isLoaded = false;
-                Debug.Log("SuperMobileAdsRewarded Failed to Load " + _adUnitId);
+                if (debug)
+                {
+                    Debug.Log("SuperMobileAdsRewarded Failed to Load " + _adUnitId);
+                }
             }
         }
 
@@ -89,7 +116,10 @@ namespace SuperMobileAds
 
             onAdShown?.Invoke();
             _isShowing = true;
-            Debug.Log("SuperMobileAdsRewarded Showed " + _adUnitId);
+            if (debug)
+            {
+                Debug.Log("SuperMobileAdsRewarded Showed " + _adUnitId);
+            }
 
             if (UnityEngine.Random.Range(0f, 6f) > 5f)
             {

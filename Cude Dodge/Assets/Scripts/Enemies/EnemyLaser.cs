@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyLaser : MonoBehaviour,
@@ -13,7 +15,7 @@ public class EnemyLaser : MonoBehaviour,
     // Movement start and end
     public Vector3 StartPosition;
     public Vector3 EndPosotion;
-    
+
     public void BeginAttack()
     {
         ForeshadowEnemy();
@@ -123,7 +125,7 @@ public class EnemyLaser : MonoBehaviour,
             if (hit.collider.gameObject.tag == "MainHero")
             {
                 // Сначала проверить наличие
-                hit.collider.gameObject.GetComponentInParent<Player>().HealthDown(5);
+                hit.collider.gameObject.GetComponentInParent<Player>().HealthDown(5, "laser");
             }
         }
         else if (debug)

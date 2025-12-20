@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +27,8 @@ public class Player : MonoBehaviour
 
     private WaitForSeconds healthDelayYield;
 
+    [SerializeField] private MainAnalyser analyser;
+
     private void Awake()
     {
         MaxHealth = health;
@@ -35,11 +39,16 @@ public class Player : MonoBehaviour
         
         _healthDecay = HealthDecayRoutine();
         
+        //analyser = GetComponent<MainAnalyser>();
+        
         healthDelayYield = new WaitForSeconds(HealthDecayInterval);
     }
 
     private void Start()
     {
+        analyser.InitializeAnalytics("mama", "papa");
+        analyser.TrackGameStart();
+        
         colorChanger.ParameterInit(0, MaxHealth);
         
         HealthUpdate();
@@ -54,11 +63,14 @@ public class Player : MonoBehaviour
         particleInstance.transform.position = transform.position;
     }
 
-    public void HealthDown(int downAmount)
+    public void HealthDown(int downAmount, string reasoner)
     {
         health -= downAmount;
         HealthUpdate();
-
+        
+        //analyser.InitializeAnalytics("mama", "papa");
+        analyser.TrackEvent("player_damage", new Dictionary<string, string> { { "reason", reasoner } });
+        
         if (health <= 0) {lostCondition.PlayerLost();}
     }
 
@@ -87,7 +99,12 @@ public class Player : MonoBehaviour
         {
             yield return healthDelayYield;
         
-            HealthDown(HealthDecayDamage);
+            HealthDown(HealthDecayDamage, "withering");
         }
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        analyser.FlushAnalytics();
     }
 }

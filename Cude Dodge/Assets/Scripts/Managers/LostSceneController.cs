@@ -17,14 +17,7 @@ public class LostSceneController : MonoBehaviour
         // Показываем счёт
         int savedScore = PlayerPrefs.GetInt("playerScore", 0);
         scoreText.text = "Score: " + savedScore;
-        
-        // Настраиваем кнопки
-        if (restartButton != null)
-            restartButton.onClick.AddListener(RestartGame);
-        
-        if (menuButton != null)
-            menuButton.onClick.AddListener(GoToMenu);
-        
+
         // Ждём немного, чтобы реклама успела загрузиться, потом показываем
         StartCoroutine(ShowAdWithDelay());
     }
